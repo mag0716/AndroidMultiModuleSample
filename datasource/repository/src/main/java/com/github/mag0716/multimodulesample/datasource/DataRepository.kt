@@ -22,7 +22,7 @@ internal class DataRepository(val apiService: ApiService) : IDataRepository {
     override suspend fun fetchDataListOrCache(): List<Data> {
         Timber.debug { "fetchDataListOrCache($this) : apiService = $apiService" }
         if (dataListCached == null) {
-            dataListCached = apiService.data().await()
+            dataListCached = apiService.data()
         }
         return checkNotNull(dataListCached).toDataList()
     }
@@ -30,7 +30,7 @@ internal class DataRepository(val apiService: ApiService) : IDataRepository {
     override suspend fun fetchDataDetailOrCache(id: Int): Detail {
         Timber.debug { "fetchDataDetailOrCache($this) : apiService = $apiService" }
         if (detailMap.contains(id).not()) {
-            val detail = apiService.detail(id).await()
+            val detail = apiService.detail(id)
             detailMap[id] = detail
         }
         return checkNotNull(detailMap[id]).toDetail()
