@@ -13,6 +13,7 @@ import com.github.mag0716.multiplemodulesample.App
 import com.github.mag0716.multiplemodulesample.list.R
 import com.github.mag0716.usercase.IDataListView
 import com.github.mag0716.usercase.IGetDataListUseCase
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -65,11 +66,11 @@ class ListFragment : Fragment(), CoroutineScope, IDataListView {
     }
 
     override fun showLoading() {
-        // TODO: ProgressBar, エラー処理
+        progress.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        // TODO: ProgressBar, エラー処理
+        progress.visibility = View.GONE
     }
 
     private fun fetchData() = launch {

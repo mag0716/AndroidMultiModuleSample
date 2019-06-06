@@ -55,12 +55,13 @@ class DetailFragment : Fragment(), CoroutineScope, IDataDetailView {
     }
 
     override fun showLoading() {
-        // TODO: ProgressBar, エラー処理
+        progress.visibility = View.VISIBLE
     }
 
     override fun dismissLoading() {
-        // TODO: ProgressBar, エラー処理
+        progress.visibility = View.GONE
     }
+
 
     private fun fetchDataDetail(id: Int) = launch {
         getDataDetailUseCase.execute(id)
