@@ -12,12 +12,9 @@ import timber.log.debug
 
 internal class DataRepository(val apiService: ApiService) : IDataRepository {
 
-    // TODO: キャッシュ機能
     // 変換したデータをキャッシュすべき？
     private var dataListCached: List<DataResponse>? = null
     private val detailMap = mutableMapOf<Int, DetailResponse>()
-
-    // TODO:リフレッシュ機構
 
     override suspend fun refreshDataList(): List<Data> {
         Timber.debug { "refreshDataList() : apiService = $apiService" }
