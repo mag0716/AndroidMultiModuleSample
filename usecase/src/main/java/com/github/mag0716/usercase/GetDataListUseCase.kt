@@ -8,6 +8,6 @@ import timber.log.debug
 internal class GetDataListUseCase(private val repository: IDataRepository) : IGetDataListUseCase {
     override suspend fun execute(): List<Data> {
         Timber.debug { "GetDataListUseCase($this) : repository = $repository" }
-        return repository.fetchDataListOrCache()
+        return repository.refreshDataList()
     }
 }

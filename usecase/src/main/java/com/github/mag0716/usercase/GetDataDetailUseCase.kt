@@ -8,6 +8,6 @@ import timber.log.debug
 internal class GetDataDetailUseCase(private val repository: IDataRepository) : IGetDataDetailUseCase {
     override suspend fun execute(id: Int): Detail {
         Timber.debug { "GetDataDetailUseCase($this) : repository = $repository" }
-        return repository.fetchDataDetailOrCache(id)
+        return repository.refreshDataDetail(id)
     }
 }

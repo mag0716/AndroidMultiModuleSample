@@ -19,20 +19,24 @@ internal class DataRepository(val apiService: ApiService) : IDataRepository {
 
     // TODO:リフレッシュ機構
 
-    override suspend fun fetchDataListOrCache(): List<Data> {
-        Timber.debug { "fetchDataListOrCache($this) : apiService = $apiService" }
-        if (dataListCached == null) {
-            dataListCached = apiService.data()
-        }
+    override suspend fun refreshDataList(): List<Data> {
+        Timber.debug { "refreshDataList() : apiService = $apiService" }
+        dataListCached = apiService.data()
         return checkNotNull(dataListCached).toDataList()
     }
 
-    override suspend fun fetchDataDetailOrCache(id: Int): Detail {
-        Timber.debug { "fetchDataDetailOrCache($this) : apiService = $apiService" }
-        if (detailMap.contains(id).not()) {
-            val detail = apiService.detail(id)
-            detailMap[id] = detail
-        }
+    override suspend fun refreshDataDetail(id: Int): Detail {
+        Timber.debug { "refreshDataDetail($id) : apiService = $apiService" }
+        val detail = apiService.detail(id)
+        detailMap[id] = detail
         return checkNotNull(detailMap[id]).toDetail()
+    }
+
+    override suspend fun loadDataList(): List<Data> {
+        return dataListCached?.toDataList() ?: emptyList()
+    }
+
+    override suspend fun loadDataDetail(id: Int): Detail? {
+        return detailMap[id]?.toDetail()
     }
 }
