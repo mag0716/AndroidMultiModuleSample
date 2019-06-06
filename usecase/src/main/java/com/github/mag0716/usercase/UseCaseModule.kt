@@ -2,10 +2,10 @@ package com.github.mag0716.usercase
 
 import com.github.mag0716.multimodulesample.datasource.IDataRepository
 
-fun provideGetDataListUseCase(dataRepository: IDataRepository): IGetDataListUseCase {
-    return GetDataListUseCase(dataRepository)
+fun provideGetDataListUseCase(dataRepository: IDataRepository, view: IDataListView): IGetDataListUseCase {
+    return GetDataListUseCase(dataRepository, view)
 }
 
-fun provideGetDataDetailUseCase(dataRepository: IDataRepository): IGetDataDetailUseCase {
-    return GetDataDetailUseCase(dataRepository)
+fun provideGetDataDetailUseCase(dataRepository: IDataRepository, view: IDataDetailView): IGetDataDetailUseCase {
+    return GetDataDetailUseCase(dataRepository, view)
 }

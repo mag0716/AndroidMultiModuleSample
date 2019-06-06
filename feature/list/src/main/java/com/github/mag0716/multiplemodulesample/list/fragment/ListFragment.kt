@@ -11,7 +11,9 @@ import androidx.recyclerview.widget.RecyclerView
 import com.github.mag0716.multimodulesample.datasource.model.Data
 import com.github.mag0716.multiplemodulesample.App
 import com.github.mag0716.multiplemodulesample.list.R
+import com.github.mag0716.usercase.IDataListView
 import com.github.mag0716.usercase.IGetDataListUseCase
+import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
 import kotlinx.coroutines.CoroutineScope
@@ -20,7 +22,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import kotlin.coroutines.CoroutineContext
 
-class ListFragment : Fragment(), CoroutineScope {
+class ListFragment : Fragment(), CoroutineScope, IDataListView {
 
     private lateinit var job: Job
 
@@ -36,7 +38,7 @@ class ListFragment : Fragment(), CoroutineScope {
         super.onCreate(savedInstanceState)
         job = Job()
 
-        getDataListUseCase = (requireActivity().application as App).getDataListUseCase
+        getDataListUseCase = (requireActivity().application as App).provideGetDataListUseCase(this)
         adapter = Adapter(requireContext())
     }
 
@@ -59,11 +61,20 @@ class ListFragment : Fragment(), CoroutineScope {
         job.cancel()
     }
 
-    private fun fetchData() = launch {
-        val dataList = getDataListUseCase.execute()
+    override fun showDataList(dataList: List<Data>) {
         adapter.addData(dataList)
+    }
 
-        // TODO: ProgressBar, エラー処理
+    override fun showLoading() {
+        progress.visibility = View.VISIBLE
+    }
+
+    override fun dismissLoading() {
+        progress.visibility = View.GONE
+    }
+
+    private fun fetchData() = launch {
+        getDataListUseCase.execute()
     }
 
     private class Adapter(val context: Context) : RecyclerView.Adapter<ViewHolder>() {

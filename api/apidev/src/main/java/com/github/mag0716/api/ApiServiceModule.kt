@@ -2,8 +2,6 @@ package com.github.mag0716.api
 
 import com.github.mag0716.api.response.DataResponse
 import com.github.mag0716.api.response.DetailResponse
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.async
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import timber.log.debug
@@ -12,14 +10,14 @@ object ApiServiceModule {
 
     fun provide(): ApiService {
         return object : ApiService {
-            override fun data() = GlobalScope.async {
+            override suspend fun data(): List<DataResponse> {
                 Timber.debug { "data" }
-                return@async createData()
+                return createData()
             }
 
-            override fun detail(id: Int) = GlobalScope.async {
+            override suspend fun detail(id: Int): DetailResponse {
                 Timber.debug { "detail($id)" }
-                return@async createDetail(id)
+                return createDetail(id)
             }
         }
     }
