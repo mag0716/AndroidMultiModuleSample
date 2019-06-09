@@ -1,6 +1,8 @@
 package com.github.mag0716.datasource.converter
 
 import com.github.mag0716.api.response.DataResponse
+import com.github.mag0716.multimodulesample.datasource.converter.toData
+import com.github.mag0716.multimodulesample.datasource.converter.toDataList
 import org.hamcrest.core.Is.`is`
 import org.junit.Assert.assertThat
 import org.junit.Test
