@@ -9,6 +9,7 @@ import com.github.mag0716.multimodulesample.datasource.model.Data
 import com.github.mag0716.multimodulesample.datastore.model.Detail
 import timber.log.Timber
 import timber.log.debug
+import kotlin.coroutines.coroutineContext
 
 internal class DataRepository(val apiService: ApiService) : IDataRepository {
 
@@ -17,13 +18,13 @@ internal class DataRepository(val apiService: ApiService) : IDataRepository {
     private val detailMap = mutableMapOf<Int, DetailResponse>()
 
     override suspend fun refreshDataList(): List<Data> {
-        Timber.debug { "refreshDataList() : apiService = $apiService" }
+        Timber.debug { "[$coroutineContext] refreshDataList() : apiService = $apiService" }
         dataListCached = apiService.data()
         return checkNotNull(dataListCached).toDataList()
     }
 
     override suspend fun refreshDataDetail(id: Int): Detail {
-        Timber.debug { "refreshDataDetail($id) : apiService = $apiService" }
+        Timber.debug { "[$coroutineContext] refreshDataDetail($id) : apiService = $apiService" }
         val detail = apiService.detail(id)
         detailMap[id] = detail
         return checkNotNull(detailMap[id]).toDetail()
