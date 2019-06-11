@@ -4,7 +4,11 @@ import com.github.mag0716.multimodulesample.datasource.IDataRepository
 import com.github.mag0716.multimodulesample.datasource.model.Data
 import com.github.mag0716.multimodulesample.datastore.model.Detail
 import junit.framework.Assert.assertEquals
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.test.resetMain
+import kotlinx.coroutines.test.setMain
+import org.junit.After
 import org.junit.Before
 import org.junit.Test
 
@@ -15,11 +19,17 @@ class GetDataListUseCaseTest {
 
     @Before
     fun setUp() {
+        Dispatchers.setMain(Dispatchers.Unconfined)
         dataListView = MockDataListView()
         useCase = GetDataListUseCase(
             MockDataRepository(),
             dataListView
         )
+    }
+
+    @After
+    fun tearDown() {
+        Dispatchers.resetMain()
     }
 
     @Test
