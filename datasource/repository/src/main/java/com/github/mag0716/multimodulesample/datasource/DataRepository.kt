@@ -7,6 +7,8 @@ import com.github.mag0716.multimodulesample.datasource.converter.toDataList
 import com.github.mag0716.multimodulesample.datasource.converter.toDetail
 import com.github.mag0716.multimodulesample.datasource.model.Data
 import com.github.mag0716.multimodulesample.datastore.model.Detail
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import timber.log.debug
 import kotlin.coroutines.coroutineContext
@@ -17,24 +19,26 @@ internal class DataRepository(val apiService: ApiService) : IDataRepository {
     private var dataListCached: List<DataResponse>? = null
     private val detailMap = mutableMapOf<Int, DetailResponse>()
 
-    override suspend fun refreshDataList(): List<Data> {
+    override suspend fun refreshDataList(): List<Data> = withContext(Dispatchers.IO) {
         Timber.debug { "[$coroutineContext] refreshDataList() : apiService = $apiService" }
         dataListCached = apiService.data()
-        return checkNotNull(dataListCached).toDataList()
+        checkNotNull(dataListCached).toDataList()
     }
 
-    override suspend fun refreshDataDetail(id: Int): Detail {
+    override suspend fun refreshDataDetail(id: Int): Detail = withContext(Dispatchers.IO) {
         Timber.debug { "[$coroutineContext] refreshDataDetail($id) : apiService = $apiService" }
         val detail = apiService.detail(id)
         detailMap[id] = detail
-        return checkNotNull(detailMap[id]).toDetail()
+        checkNotNull(detailMap[id]).toDetail()
     }
 
     override suspend fun loadDataList(): List<Data> {
+        Timber.debug { "[$coroutineContext] loadDataList()" }
         return dataListCached?.toDataList() ?: emptyList()
     }
 
     override suspend fun loadDataDetail(id: Int): Detail? {
+        Timber.debug { "[$coroutineContext] loadDataDetail($id)" }
         return detailMap[id]?.toDetail()
     }
 }

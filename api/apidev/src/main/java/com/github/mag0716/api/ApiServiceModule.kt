@@ -12,12 +12,12 @@ object ApiServiceModule {
     fun provide(): ApiService {
         return object : ApiService {
             override suspend fun data(): List<DataResponse> {
-                Timber.debug { "data" }
+                Timber.debug { "[$coroutineContext] data" }
                 return createData()
             }
 
             override suspend fun detail(id: Int): DetailResponse {
-                Timber.debug { "detail($id)" }
+                Timber.debug { "[$coroutineContext] detail($id)" }
                 return createDetail(id)
             }
         }
