@@ -5,24 +5,26 @@ import com.github.mag0716.api.response.DetailResponse
 import kotlinx.coroutines.delay
 import timber.log.Timber
 import timber.log.debug
+import kotlin.coroutines.coroutineContext
 
 object ApiServiceModule {
 
     fun provide(): ApiService {
         return object : ApiService {
             override suspend fun data(): List<DataResponse> {
-                Timber.debug { "data" }
+                Timber.debug { "[$coroutineContext] data" }
                 return createData()
             }
 
             override suspend fun detail(id: Int): DetailResponse {
-                Timber.debug { "detail($id)" }
+                Timber.debug { "[$coroutineContext] detail($id)" }
                 return createDetail(id)
             }
         }
     }
 
     private suspend fun createData(): List<DataResponse> {
+        Timber.debug { "[$coroutineContext] createData()" }
         delay(1000)
         return (0..10).map {
             DataResponse(it, "title$it")
@@ -30,6 +32,7 @@ object ApiServiceModule {
     }
 
     private suspend fun createDetail(id: Int): DetailResponse {
+        Timber.debug { "[$coroutineContext] createDetail($id)" }
         delay(1000)
         return DetailResponse(
             id,

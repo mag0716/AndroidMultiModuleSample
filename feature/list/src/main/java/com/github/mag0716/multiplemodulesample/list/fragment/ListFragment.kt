@@ -17,26 +17,18 @@ import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.Job
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
-import kotlin.coroutines.CoroutineContext
 
-class ListFragment : Fragment(), CoroutineScope, IDataListView {
-
-    private lateinit var job: Job
+class ListFragment : Fragment(), IDataListView, CoroutineScope by MainScope() {
 
     private lateinit var getDataListUseCase: IGetDataListUseCase
 
     private lateinit var adapter: Adapter
 
-    override
-    val coroutineContext: CoroutineContext
-        get() = Dispatchers.Main + job
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        job = Job()
 
         getDataListUseCase = (requireActivity().application as App).provideGetDataListUseCase(this)
         adapter = Adapter(requireContext())
@@ -58,7 +50,7 @@ class ListFragment : Fragment(), CoroutineScope, IDataListView {
 
     override fun onStop() {
         super.onStop()
-        job.cancel()
+        cancel()
     }
 
     override fun showDataList(dataList: List<Data>) {

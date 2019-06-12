@@ -13,4 +13,5 @@ dependencies {
 
     // for test
     testImplementation "junit:junit:${versions.junit}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutine}"
 }
