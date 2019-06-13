@@ -5,28 +5,29 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.github.mag0716.multimodulesample.datastore.model.Detail
-import com.github.mag0716.multiplemodulesample.App
 import com.github.mag0716.multiplemodulesample.detail.R
-import com.github.mag0716.usercase.IDataDetailView
-import com.github.mag0716.usercase.IGetDataDetailUseCase
 import kotlinx.android.synthetic.main.fragment_detail.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 
-class DetailFragment : Fragment(), IDataDetailView, CoroutineScope by MainScope() {
+class DetailFragment : Fragment() {
 
-    private lateinit var getDataDetailUseCase: IGetDataDetailUseCase
-
+    private lateinit var viewModel: DetailViewModel
     private val args by navArgs<DetailFragmentArgs>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        getDataDetailUseCase = (requireActivity().application as App).provideGetDataDetailUseCase(this)
+        viewModel = activity?.run {
+            ViewModelProviders.of(this).get(DetailViewModel::class.java)
+        } ?: throw IllegalStateException("invalid Activity")
+        viewModel.getDetail().observe(this, Observer<Detail> {
+            titleText.text = it.title
+        })
+        viewModel.getProgress().observe(this, Observer<Boolean> {
+            progress.visibility = if (it) View.VISIBLE else View.GONE
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -35,28 +36,6 @@ class DetailFragment : Fragment(), IDataDetailView, CoroutineScope by MainScope(
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fetchDataDetail(args.id)
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        cancel()
-    }
-
-    override fun showDataDetail(detail: Detail) {
-        titleText.text = detail.title
-    }
-
-    override fun showLoading() {
-        progress.visibility = View.VISIBLE
-    }
-
-    override fun dismissLoading() {
-        progress.visibility = View.GONE
-    }
-
-
-    private fun fetchDataDetail(id: Int) = launch {
-        getDataDetailUseCase.execute(id)
+        viewModel.fetchDetail(args.id)
     }
 }
