@@ -6,32 +6,33 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mag0716.multimodulesample.datasource.model.Data
-import com.github.mag0716.multiplemodulesample.App
 import com.github.mag0716.multiplemodulesample.list.R
-import com.github.mag0716.usercase.IDataListView
-import com.github.mag0716.usercase.IGetDataListUseCase
 import kotlinx.android.synthetic.main.fragment_list.*
 import kotlinx.android.synthetic.main.fragment_list.view.*
 import kotlinx.android.synthetic.main.item_list.view.*
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.cancel
-import kotlinx.coroutines.launch
 
-class ListFragment : Fragment(), IDataListView, CoroutineScope by MainScope() {
+class ListFragment : Fragment() {
 
-    private lateinit var getDataListUseCase: IGetDataListUseCase
-
+    private lateinit var viewModel: ListViewModel
     private lateinit var adapter: Adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        getDataListUseCase = (requireActivity().application as App).provideGetDataListUseCase(this)
         adapter = Adapter(requireContext())
+
+        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
+        viewModel.getDataList().observe(this, Observer<List<Data>> {
+            adapter.addData(it)
+        })
+        viewModel.getProgress().observe(this, Observer<Boolean> {
+            progress.visibility = if (it) View.VISIBLE else View.GONE
+        })
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -45,28 +46,7 @@ class ListFragment : Fragment(), IDataListView, CoroutineScope by MainScope() {
 
     override fun onStart() {
         super.onStart()
-        fetchData()
-    }
-
-    override fun onStop() {
-        super.onStop()
-        cancel()
-    }
-
-    override fun showDataList(dataList: List<Data>) {
-        adapter.addData(dataList)
-    }
-
-    override fun showLoading() {
-        progress.visibility = View.VISIBLE
-    }
-
-    override fun dismissLoading() {
-        progress.visibility = View.GONE
-    }
-
-    private fun fetchData() = launch {
-        getDataListUseCase.execute()
+        viewModel.fetchData()
     }
 
     private class Adapter(val context: Context) : RecyclerView.Adapter<ViewHolder>() {
