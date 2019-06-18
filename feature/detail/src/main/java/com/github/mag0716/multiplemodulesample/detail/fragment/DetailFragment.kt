@@ -19,9 +19,7 @@ class DetailFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        viewModel = activity?.run {
-            ViewModelProviders.of(this).get(DetailViewModel::class.java)
-        } ?: throw IllegalStateException("invalid Activity")
+        viewModel = ViewModelProviders.of(this).get(DetailViewModel::class.java)
         viewModel.getDetail().observe(this, Observer<Detail> {
             titleText.text = it.title
         })

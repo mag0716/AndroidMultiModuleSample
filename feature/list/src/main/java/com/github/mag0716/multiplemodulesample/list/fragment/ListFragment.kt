@@ -26,9 +26,7 @@ class ListFragment : Fragment() {
 
         adapter = Adapter(requireContext())
 
-        viewModel = activity?.run {
-            ViewModelProviders.of(this).get(ListViewModel::class.java)
-        } ?: throw IllegalStateException("invalid Activity")
+        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         viewModel.getDataList().observe(this, Observer<List<Data>> {
             adapter.addData(it)
         })
