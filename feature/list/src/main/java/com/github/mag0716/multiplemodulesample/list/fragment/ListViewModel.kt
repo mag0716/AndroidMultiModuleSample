@@ -10,6 +10,8 @@ import com.github.mag0716.multiplemodulesample.App
 import com.github.mag0716.usercase.IDataListView
 import com.github.mag0716.usercase.IGetDataListUseCase
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import timber.log.debug
 
 class ListViewModel(application: Application) : AndroidViewModel(application), IDataListView {
 
@@ -39,8 +41,12 @@ class ListViewModel(application: Application) : AndroidViewModel(application), I
     }
 
     fun fetchData() {
-        viewModelScope.launch {
-            getDataListUseCase.execute()
+        val progressing = progress.value ?: false
+        Timber.debug { "[$this] fetchData() : $progressing" }
+        if (progressing.not()) {
+            viewModelScope.launch {
+                getDataListUseCase.execute()
+            }
         }
     }
 }

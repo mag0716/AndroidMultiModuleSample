@@ -10,6 +10,8 @@ import com.github.mag0716.multiplemodulesample.App
 import com.github.mag0716.usercase.IDataDetailView
 import com.github.mag0716.usercase.IGetDataDetailUseCase
 import kotlinx.coroutines.launch
+import timber.log.Timber
+import timber.log.debug
 
 class DetailViewModel(application: Application) : AndroidViewModel(application), IDataDetailView {
 
@@ -39,8 +41,12 @@ class DetailViewModel(application: Application) : AndroidViewModel(application),
     }
 
     fun fetchDetail(id: Int) {
-        viewModelScope.launch {
-            getDetailUseCase.execute(id)
+        val progressing = progress.value ?: false
+        Timber.debug { "[$this] fetchDetail($id) : $progressing" }
+        if (progressing.not()) {
+            viewModelScope.launch {
+                getDetailUseCase.execute(id)
+            }
         }
     }
 }
