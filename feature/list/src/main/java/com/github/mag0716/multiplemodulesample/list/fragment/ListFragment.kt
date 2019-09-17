@@ -5,9 +5,10 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.github.mag0716.multimodulesample.datasource.model.Data
@@ -18,15 +19,13 @@ import kotlinx.android.synthetic.main.item_list.view.*
 
 class ListFragment : Fragment() {
 
-    private lateinit var viewModel: ListViewModel
+    private val viewModel: ListViewModel by viewModels()
     private lateinit var adapter: Adapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         adapter = Adapter(requireContext())
-
-        viewModel = ViewModelProviders.of(this).get(ListViewModel::class.java)
         viewModel.getDataList().observe(this, Observer<List<Data>> {
             adapter.addData(it)
         })
@@ -35,7 +34,11 @@ class ListFragment : Fragment() {
         })
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         return inflater.inflate(R.layout.fragment_list, container, false)
     }
 
@@ -81,6 +84,6 @@ class ListFragment : Fragment() {
     }
 
     private class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val titleText = itemView.titleText
+        val titleText: TextView = itemView.titleText
     }
 }
