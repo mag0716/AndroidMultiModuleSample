@@ -3,12 +3,12 @@ package com.github.mag0716.usercase
 import com.github.mag0716.multimodulesample.datasource.IDataRepository
 import com.github.mag0716.multimodulesample.datasource.model.Data
 import com.github.mag0716.multimodulesample.datastore.model.Detail
-import junit.framework.Assert.assertEquals
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.test.resetMain
 import kotlinx.coroutines.test.setMain
 import org.junit.After
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
 
