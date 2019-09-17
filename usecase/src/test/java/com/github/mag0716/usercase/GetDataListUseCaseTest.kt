@@ -50,11 +50,6 @@ class GetDataListUseCaseTest {
         assertEquals("thumbnail0", showedDataList[1][0].thumbnail)
     }
 
-    @Test
-    fun Actionsの動作確認で強制的に失敗させる() {
-        assertEquals(1, 2)
-    }
-
     // region mock
 
     private class MockDataRepository : IDataRepository {
