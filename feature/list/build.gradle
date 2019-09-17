@@ -8,6 +8,13 @@ android {
         minSdkVersion buildConfig.minSdk
         targetSdkVersion buildConfig.targetSdk
     }
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
+    kotlinOptions {
+        jvmTarget = "1.8"
+    }
 
     // TODO: ここも app/build.gradle で重複しているのでなんとかしたい
     flavorDimensions "environment"
