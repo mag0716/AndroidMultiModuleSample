@@ -18,6 +18,10 @@ object Versions {
 
     const val com_android_tools_build_gradle: String = "3.6.0-alpha12"
 
+    const val lifecycle_viewmodel_savedstate: String = "1.0.0-alpha04"
+
+    const val lifecycle_viewmodel_ktx: String = "2.2.0-alpha04"
+
     const val com_jakewharton_timber: String = "5.0.0-SNAPSHOT"
 
     const val com_squareup_retrofit2: String = "2.6.1"
@@ -26,11 +30,11 @@ object Versions {
 
     const val androidx_test_runner: String = "1.1.0-beta01"
 
+    const val lifecycle_extensions: String = "2.2.0-alpha04"
+
     const val org_jetbrains_kotlin: String = "1.3.50"
 
     const val androidx_navigation: String = "2.1.0"
-
-    const val androidx_lifecycle: String = "2.2.0-alpha04"
 
     const val constraintlayout: String = "1.1.3"
 

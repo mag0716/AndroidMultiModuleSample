@@ -24,6 +24,13 @@ object Libs {
     const val com_android_tools_build_gradle: String = "com.android.tools.build:gradle:" +
             Versions.com_android_tools_build_gradle
 
+    const val lifecycle_viewmodel_savedstate: String =
+            "androidx.lifecycle:lifecycle-viewmodel-savedstate:" +
+            Versions.lifecycle_viewmodel_savedstate
+
+    const val lifecycle_viewmodel_ktx: String = "androidx.lifecycle:lifecycle-viewmodel-ktx:" +
+            Versions.lifecycle_viewmodel_ktx
+
     const val timber_android: String = "com.jakewharton.timber:timber-android:" +
             Versions.com_jakewharton_timber
 
@@ -61,6 +68,9 @@ object Libs {
             Versions.org_jetbrains_kotlinx
 
     const val androidx_test_runner: String = "androidx.test:runner:" + Versions.androidx_test_runner
+
+    const val lifecycle_extensions: String = "androidx.lifecycle:lifecycle-extensions:" +
+            Versions.lifecycle_extensions
 
     /**
      * https://kotlinlang.org/
@@ -111,12 +121,6 @@ object Libs {
      */
     const val navigation_ui_ktx: String = "androidx.navigation:navigation-ui-ktx:" +
             Versions.androidx_navigation
-
-    const val lifecycle_extensions: String = "androidx.lifecycle:lifecycle-extensions:" +
-            Versions.androidx_lifecycle
-
-    const val lifecycle_viewmodel_ktx: String = "androidx.lifecycle:lifecycle-viewmodel-ktx:" +
-            Versions.androidx_lifecycle
 
     /**
      * http://tools.android.com

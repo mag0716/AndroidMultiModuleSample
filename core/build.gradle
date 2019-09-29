@@ -62,6 +62,7 @@ dependencies {
     api(Libs.navigation_ui_ktx)
     api(Libs.lifecycle_extensions)
     api(Libs.lifecycle_viewmodel_ktx)
+    api(Libs.lifecycle_viewmodel_savedstate)
 
     api(Libs.timber_android)
 
