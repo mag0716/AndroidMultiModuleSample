@@ -33,7 +33,7 @@ dependencies {
     implementation project(':core')
 
     // for test
-    testImplementation "junit:junit:${versions.junit}"
-    androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso}"
-    androidTestImplementation "androidx.test:runner:${versions.runner}"
+    testImplementation(Libs.junit)
+    androidTestImplementation(Libs.espresso_core)
+    androidTestImplementation(Libs.androidx_test_runner)
 }

@@ -15,6 +15,7 @@
             <option value="$PROJECT_DIR$/api/api" />
             <option value="$PROJECT_DIR$/api/apidev" />
             <option value="$PROJECT_DIR$/api/apiprod" />
+            <option value="$PROJECT_DIR$/buildSrc" />
             <option value="$PROJECT_DIR$/core" />
             <option value="$PROJECT_DIR$/datasource" />
             <option value="$PROJECT_DIR$/datasource/data" />
