@@ -4,14 +4,14 @@ apply plugin: 'kotlin'
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
-    implementation(Libs.kotlin_stdlib_jdk7)
-    implementation(Libs.kotlinx_coroutines_core)
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:${versions.kotlin}"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:${versions.coroutine}"
 
     implementation project(':datasource:repository')
 
-    implementation(Libs.timber_jdk)
+    implementation "com.jakewharton.timber:timber-jdk:${versions.timber}"
 
     // for test
-    testImplementation(Libs.junit)
-    testImplementation(Libs.kotlinx_coroutines_test)
+    testImplementation "junit:junit:${versions.junit}"
+    testImplementation "org.jetbrains.kotlinx:kotlinx-coroutines-test:${versions.coroutine}"
 }
