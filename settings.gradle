@@ -1,5 +1,5 @@
 include ':core',
-        ':feature:list', ':feature:detail',
+        ':feature:list', ':feature:detail', ':feature:camera',
         ':usecase',
         ':datasource:repository', ':datasource:data',
         ':api:api', ':api:apidev', ':api:apiprod'
