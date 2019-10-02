@@ -3,4 +3,6 @@
     <string name="title_activity_main">MainActivity</string>
     <string name="title_list">List</string>
     <string name="title_detail">Detail</string>
+
+    <string name="menu_title_information">Information</string>
 </resources>
