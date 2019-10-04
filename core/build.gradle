@@ -2,7 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
-apply plugin: 'com.google.android.gms.oss-licenses-plugin'
+apply plugin: 'com.cookpad.android.licensetools'
 
 android {
     compileSdkVersion buildConfig.compileSdk
@@ -63,8 +63,6 @@ dependencies {
     api "androidx.lifecycle:lifecycle-viewmodel-ktx:${versions.lifecycle}"
 
     api "com.jakewharton.timber:timber-android:${versions.timber}"
-
-    implementation 'com.google.android.gms:play-services-oss-licenses:17.0.0'
 
     // for multi module
     api project(":usecase")
