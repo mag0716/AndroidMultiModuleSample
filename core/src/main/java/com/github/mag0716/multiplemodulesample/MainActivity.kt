@@ -1,5 +1,6 @@
 package com.github.mag0716.multiplemodulesample
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
@@ -20,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.show_infomartion -> {
+                startActivity(Intent(this, LicenseActivity::class.java))
                 true
             }
             else -> super.onOptionsItemSelected(item)
