@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
+apply plugin: "io.github.jmatsu.license-list"
 
 android {
     compileSdkVersion buildConfig.compileSdk
@@ -77,4 +78,8 @@ dependencies {
     testImplementation "junit:junit:${versions.junit}"
     androidTestImplementation "androidx.test.espresso:espresso-core:${versions.espresso}"
     androidTestImplementation "androidx.test:runner:${versions.runner}"
+}
+
+licenseList {
+    defaultVariant = "prodRelease"
 }
